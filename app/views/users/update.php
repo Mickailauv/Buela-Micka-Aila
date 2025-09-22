@@ -21,7 +21,7 @@
         <input type="text" id="username" name="username"
         value="<?= html_escape($user['username']); ?>"
         required
-          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
       </div>
 
       <!-- Email -->
@@ -30,14 +30,14 @@
         <input type="email" id="email" name="email"
         value="<?= html_escape($user['email']); ?>"
         required
-          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
       </div>
 
       <!-- Action Buttons -->
       <div class="flex space-x-3">
         <!-- Update -->
         <button type="submit"
-          class="flex-1 bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-200">
+          class="flex-1 bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-200">
           Update
         </button>
 

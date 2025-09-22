@@ -66,6 +66,9 @@ $config['VERSION']                 = '4.2.4';
 */
 $config['ENVIRONMENT']             = 'development';
 
+$config['base_url'] = 'https://your-app-name.onrender.com/';
+
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL

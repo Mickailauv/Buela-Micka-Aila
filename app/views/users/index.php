@@ -1,92 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User List</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Users Info</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+ body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4fdf6; /* light greenish white */
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #198754; /* Bootstrap green */
+  margin-bottom: 30px; 
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.search-form {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.search-form .btn-search {
+  background: #198754;     /* green background */
+  color: #fff;             /* white text */
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  transition: all 0.3s ease;
+}
+
+.search-form .btn-search:hover {
+  background: #157347; /* darker green */
+}
+
+
+/* Table */
+table {
+  width: 90%;
+  margin: 0 auto 25px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+th {
+  background: #198754; /* green header */
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 14px;
+  padding: 14px;
+}
+
+td {
+  font-size: 15px;
+  color: #444;
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+  background-color: #e9f7ef; /* soft green hover */
+  transition: background-color 0.3s ease;
+}
+
+/* Action Buttons */
+a {
+  margin: 0 4px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+a[href*="update"] {
+  color: #fff;
+  background: #20c997; /* teal green */
+}
+
+a[href*="update"]:hover {
+  background: #17a589;
+}
+
+a[href*="delete"] {
+  color: #fff;
+  background: #dc3545;
+}
+
+a[href*="delete"]:hover {
+  background: #b02a37;
+}
+
+/* Create Button */
+.btn-create {
+  display: inline-block;
+  padding: 12px 22px;
+  background: #198754;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-create:hover {
+  background: #157347;
+  transform: translateY(-2px);
+}
+
+/* Pagination Styling */
+.pagination {
+  justify-content: center;
+}
+
+/* ✅ Force Green Theme Pagination */
+.pagination a,
+.pagination strong {
+  margin: 0 3px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #198754 !important;
+  font-size: 14px;
+  text-decoration: none;
+  color: #ffffffff !important;   /* make text green */
+  background: #198754 !important; /* white background */
+}
+
+.pagination a:hover {
+  background: #ffffffff !important;
+  color: #198754 !important;
+}
+
+.pagination strong {
+  background: #ffffffff !important; /* active page green */
+  color: #198754 !important;
+}
+.page-link.active {
+    background-color: #ffffff !important; /* white background */
+    color: #198754 !important;            /* green text */
+    border: 1px solid #198754 !important; /* green border */
+}
+
+
+
+  </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body>
+  <h1>Users Info</h1>
 
-  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl">
-    <!-- Title -->
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">User List</h1>
+  <!-- Search -->
+  <form action="<?= site_url('users'); ?>" method="get" class="search-form">
+    <?php
+		$q = '';
+		if(isset($_GET['q'])) {
+			$q = $_GET['q'];
+		}
+		?>
+    <input class="form-control" name="q" type="text" placeholder="Search..." value="<?= html_escape($q); ?>" style="max-width: 300px;">
+    <button type="submit" class="btn-search">Search</button>
 
-    <!-- Table -->
-    <div class="overflow-x-auto">
-      <table class="min-w-full border border-gray-200 rounded-lg">
-        <thead class="bg-gray-600 text-white">
-          <tr>
-            <th class="px-6 py-3 text-left text-sm font-semibold">ID</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold">Username</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold">Email</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold">Action</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-          <?php foreach (html_escape($users) as $user): ?>
-            <tr class="hover:bg-gray-50">
-              <td class="px-6 py-4 text-sm text-gray-700"><?= $user['id']; ?></td>
-              <td class="px-6 py-4 text-sm font-medium text-gray-900"><?= $user['username']; ?></td>
-              <td class="px-6 py-4 text-sm text-gray-700"><?= $user['email']; ?></td>
-              <td class="px-6 py-4 text-sm text-gray-700">
-                <a href="<?=site_url('users/update/'.$user['id']);?>" 
-                   class="text-blue-600 hover:underline">Update</a> 
-                | 
-                <button onclick="openModal(<?= $user['id']; ?>)" 
-                        class="text-red-600 hover:underline">
-                  Delete
-                </button>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
+  </form>
 
-    <!-- Create Button -->
-    <div class="mt-6">
-      <a href="<?= site_url('users/create'); ?>"
-        class="inline-block bg-gray-600 text-white px-5 py-2 rounded-lg shadow hover:bg-gray-700 transition duration-200">
-        + Create New User
-      </a>
-    </div>
+  <!-- Table -->
+  <table class="table table-hover table-bordered text-center align-middle">
+    <thead>
+      <tr>
+        <th width="10%">ID</th>
+        <th width="30%">Name</th>
+        <th width="40%">Email</th>
+        <th width="20%">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach (html_escape($user) as $users): ?>
+        <tr>
+          <td><?= html_escape($users['id']); ?></td>
+          <td><?= html_escape($users['username']); ?></td>
+          <td><?= html_escape($users['email']); ?></td>
+          <td>
+            <a href="<?= site_url('/users/update/'.$users['id']); ?>">Update</a>
+            <a href="<?= site_url('/users/delete/'.$users['id']); ?>" onclick="return confirm('Delete this user?');">Delete</a>
+          </td>
+        </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+  <?php
+	echo $page;?>
+
+  <!-- Create Button -->
+  <div class="text-center">
+    <a href="<?= site_url('users/create'); ?>" class="btn-create">+ Create New User</a>
   </div>
-
-  <!-- Delete Confirmation Modal -->
-  <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-sm">
-      <h2 class="text-lg font-semibold text-gray-800 mb-4">Confirm Delete</h2>
-      <p class="text-gray-600 mb-6">Are you sure you want to delete this user? This action cannot be undone.</p>
-      <div class="flex justify-end space-x-3">
-        <button onclick="closeModal()" 
-                class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">
-          Cancel
-        </button>
-        <a id="confirmDeleteBtn" href="#" 
-           class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-red-700">
-          Delete
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    let deleteUrl = "";
-
-    function openModal(userId) {
-      deleteUrl = "<?= site_url('users/delete/'); ?>" + userId;
-      document.getElementById("confirmDeleteBtn").setAttribute("href", deleteUrl);
-
-      document.getElementById("deleteModal").classList.remove("hidden");
-      document.getElementById("deleteModal").classList.add("flex");
-    }
-
-    function closeModal() {
-      document.getElementById("deleteModal").classList.add("hidden");
-      document.getElementById("deleteModal").classList.remove("flex");
-    }
-  </script>
-
 </body>
 </html>
