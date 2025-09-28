@@ -14,7 +14,7 @@
       margin: 0;
       min-height: 100vh;
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #e8f5e9, #f1f8f6);
+      background: linear-gradient(135deg, #e3f2fd, #f5f9ff); /* blue gradient */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -34,7 +34,7 @@
     .register-container h2 {
       font-size: 2em;
       font-weight: 600;
-      color: #2e7d32;
+      color: #1565c0; /* professional blue */
       margin-bottom: 20px;
     }
 
@@ -48,7 +48,7 @@
       width: 100%;
       padding: 12px 40px 12px 14px;
       font-size: 14px;
-      border: 1px solid #c8e6c9;
+      border: 1px solid #bbdefb; /* light blue */
       border-radius: 8px;
       background: #fff;
       color: #333;
@@ -58,8 +58,8 @@
 
     .form-group input:focus,
     .form-group select:focus {
-      border-color: #43a047;
-      box-shadow: 0 0 6px rgba(67, 160, 71, 0.4);
+      border-color: #1e88e5; /* bright blue */
+      box-shadow: 0 0 6px rgba(30, 136, 229, 0.4);
       outline: none;
     }
 
@@ -70,7 +70,7 @@
       transform: translateY(-50%);
       cursor: pointer;
       font-size: 1.1em;
-      color: #43a047;
+      color: #1e88e5; /* blue icon */
     }
 
     .btn-submit {
@@ -78,7 +78,7 @@
       padding: 14px;
       border: none;
       border-radius: 8px;
-      background: #2e7d32;
+      background: #1565c0; /* dark blue */
       color: #fff;
       font-size: 1.1em;
       font-weight: 500;
@@ -88,7 +88,7 @@
     }
 
     .btn-submit:hover {
-      background: #1b5e20;
+      background: #0d47a1; /* navy blue */
       transform: translateY(-2px);
     }
 
@@ -98,7 +98,7 @@
     }
 
     .group a {
-      color: #2e7d32;
+      color: #1565c0;
       font-weight: 500;
       text-decoration: none;
       transition: 0.2s;
@@ -106,18 +106,29 @@
 
     .group a:hover {
       text-decoration: underline;
-      color: #1b5e20;
+      color: #0d47a1;
+    }
+
+    /* Error box */
+    .error-box {
+      background: rgba(244, 67, 54, 0.1);
+      color: #d32f2f;
+      padding: 10px;
+      border: 1px solid #e57373;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.95em;
     }
   </style>
 </head>
 <body>
   <div class="register-container">
     <h2>Register</h2>
-     <?php if (!empty($error)): ?>
-      <div style="color: red; margin-bottom: 15px; font-size: 0.9em; font-weight: 500;">
+    <?php if (!empty($error)): ?>
+      <div class="error-box">
           <?= $error ?>
       </div>
-  <?php endif; ?>
+    <?php endif; ?>
     <form method="POST" action="<?= site_url('auth/register'); ?>">
       
       <div class="form-group">
@@ -155,7 +166,6 @@
     </div>
   </div>
   
-
   <script>
     function toggleVisibility(toggleId, inputId) {
       const toggle = document.getElementById(toggleId);

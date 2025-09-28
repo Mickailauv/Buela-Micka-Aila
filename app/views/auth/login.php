@@ -14,7 +14,7 @@
       margin: 0;
       min-height: 100vh;
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #e8f5e9, #f1f8f6);
+      background: linear-gradient(135deg, #e3f2fd, #f5f9ff); /* light blue background */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -34,7 +34,7 @@
     .login-container h2 {
       font-size: 2em;
       font-weight: 600;
-      color: #2e7d32;
+      color: #1565c0; /* deep professional blue */
       margin-bottom: 20px;
     }
 
@@ -57,7 +57,7 @@
       width: 100%;
       padding: 12px 40px 12px 14px;
       font-size: 14px;
-      border: 1px solid #c8e6c9;
+      border: 1px solid #bbdefb; /* light blue border */
       border-radius: 8px;
       background: #fff;
       color: #333;
@@ -66,8 +66,8 @@
     }
 
     .form-group input:focus {
-      border-color: #43a047;
-      box-shadow: 0 0 6px rgba(67, 160, 71, 0.4);
+      border-color: #1e88e5; /* primary blue */
+      box-shadow: 0 0 6px rgba(30, 136, 229, 0.4);
       outline: none;
     }
 
@@ -78,7 +78,7 @@
       transform: translateY(-50%);
       cursor: pointer;
       font-size: 1.1em;
-      color: #43a047;
+      color: #1e88e5; /* blue for icon */
     }
 
     .btn-submit {
@@ -86,7 +86,7 @@
       padding: 14px;
       border: none;
       border-radius: 8px;
-      background: #2e7d32;
+      background: #1565c0; /* dark professional blue */
       color: #fff;
       font-size: 1.1em;
       font-weight: 500;
@@ -95,7 +95,7 @@
     }
 
     .btn-submit:hover {
-      background: #1b5e20;
+      background: #0d47a1; /* navy blue */
       transform: translateY(-2px);
     }
 
@@ -105,7 +105,7 @@
     }
 
     .group a {
-      color: #2e7d32;
+      color: #1565c0;
       font-weight: 500;
       text-decoration: none;
       transition: 0.2s;
@@ -113,7 +113,7 @@
 
     .group a:hover {
       text-decoration: underline;
-      color: #1b5e20;
+      color: #0d47a1;
     }
   </style>
 </head>
