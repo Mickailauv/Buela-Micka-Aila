@@ -47,7 +47,8 @@ class Auth {
     {
         $user = $this->_lava->db->table('users')
                          ->where('username', $username)
-                         ->get();
+                         ->get()
+                         ->row_array(); 
 
         if ($user && password_verify($password, $user['password'])) {
             $this->_lava->session->set_userdata([

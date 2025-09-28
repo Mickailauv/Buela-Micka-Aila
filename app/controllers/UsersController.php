@@ -250,42 +250,43 @@ public function register()
 
 
         public function login()
-{
-    $this->call->model('Usersmodel');
-    $error = null;
+        {
+            $this->call->library('auth');
 
-    if ($this->io->method() == 'post') {
-        $username = $this->io->post('username');
-        $password = $this->io->post('password');
+            $error = null; // prepare error variable
 
-        $user = $this->Usersmodel->get_user_by_username($username);
+            if ($this->io->method() == 'post') {
+                $username = $this->io->post('username');
+                $password = $this->io->post('password');
 
-        if ($user) {
-            // ✅ Verify hashed password
-            if (password_verify($password, $user['password'])) {
-                // Set session
-                $_SESSION['user'] = [
-                    'id'       => $user['id'],
-                    'username' => $user['username'],
-                    'role'     => $user['role']
-                ];
+                $this->call->model('Usersmodel');
+                $user = $this->Usersmodel->get_user_by_username($username);
 
-                // Redirect depending on role
-                if ($user['role'] == 'admin') {
-                    redirect('/users');
+                if ($user) {
+                    if ($this->auth->login($username, $password)) {
+                        // Set session
+                        $_SESSION['user'] = [
+                            'id'       => $user['id'],
+                            'username' => $user['username'],
+                            'role'     => $user['role']
+                        ];
+
+                        if ($user['role'] == 'admin') {
+                            redirect('/users');
+                        } else {
+                            redirect('/users');
+                        }
+                    } else {
+                        $error = "Incorrect password!";
+                    }
                 } else {
-                    redirect('/users');
+                    $error = "Username not found!";
                 }
-            } else {
-                $error = "Incorrect password!";
             }
-        } else {
-            $error = "Username not found!";
-        }
-    }
 
-    $this->call->view('auth/login', ['error' => $error]);
-}
+            // Pass error to view
+            $this->call->view('auth/login', ['error' => $error]);
+        }
 
 
 
