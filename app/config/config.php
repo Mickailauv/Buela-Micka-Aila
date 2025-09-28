@@ -66,7 +66,7 @@ $config['VERSION']                 = '4.2.4';
 */
 $config['ENVIRONMENT']             = 'development';
 
-$config['base_url'] = 'https://your-app-name.onrender.com/';
+
 
 
 /*
@@ -82,7 +82,7 @@ $config['base_url'] = 'https://your-app-name.onrender.com/';
 | WARNING: You MUST set this value!
 |
 */
-$config['base_url'] 				= '';
+$config['base_url'] 				= 'https://buela-micka-aila.onrender.com';
 
 /*
 |--------------------------------------------------------------------------
