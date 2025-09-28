@@ -42,7 +42,7 @@
       margin-bottom: 25px;
       font-size: 2em;
       font-weight: 600;
-      color: #1565c0;
+      color: #1565c0; /* deep blue */
     }
 
     .top-bar {
@@ -54,7 +54,7 @@
 
     .logout-btn {
       padding: 10px 18px;
-      background: #42a5f5;
+      background: #42a5f5; /* medium blue */
       border: none;
       border-radius: 8px;
       font-weight: 600;
@@ -64,7 +64,7 @@
     }
 
     .logout-btn:hover {
-      background: #1565c0;
+      background: #1565c0; /* darker blue */
       transform: translateY(-2px);
     }
 
@@ -74,8 +74,8 @@
       gap: 8px;
       padding: 6px 12px;
       border-radius: 8px;
-      background: #f0f7ff;
-      border: 1px solid #bbdefb;
+      background: #f0f7ff; /* light gray-blue */
+      border: 1px solid #bbdefb; /* light blue border */
     }
 
     .search-form input {
@@ -96,13 +96,13 @@
       font-weight: 600;
       border-radius: 6px;
       border: none;
-      background: #1e88e5;
+      background: #1e88e5; /* primary blue */
       color: #fff;
       transition: 0.3s ease;
     }
 
     .search-form button:hover {
-      background: #1565c0;
+      background: #0d47a1; /* navy blue */
       transform: translateY(-2px);
     }
 
@@ -125,8 +125,8 @@
     }
 
     th {
-      background: #90caf9;
-      color: #0d47a1;
+      background: #90caf9; /* light sky blue */
+      color: #0d47a1; /* dark navy */
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
@@ -141,7 +141,7 @@
     }
 
     tr:hover {
-      background: #f5f9ff;
+      background: #f5f9ff; /* soft blue-gray hover */
       transition: 0.3s ease;
     }
 
@@ -156,16 +156,16 @@
     }
 
     a[href*="update"] {
-      background: #64b5f6;
+      background: #64b5f6; /* lighter blue */
       color: #fff;
     }
 
     a[href*="update"]:hover {
-      background: #1976d2;
+      background: #1976d2; /* stronger blue */
     }
 
     a[href*="delete"] {
-      background: #ef5350;
+      background: #ef5350; /* keep delete red */
       color: #fff;
     }
 
@@ -182,7 +182,7 @@
       width: 50%;
       padding: 14px;
       border: none;
-      background: #1565c0;
+      background: #1565c0; /* dark professional blue */
       color: #fff;
       font-size: 1.1em;
       font-weight: 500;
@@ -192,7 +192,7 @@
     }
 
     .btn-create:hover {
-      background: #0d47a1;
+      background: #0d47a1; /* darker navy */
       transform: translateY(-2px);
     }
 
@@ -239,6 +239,31 @@
       gap: 8px;
       padding: 0;
       margin: 0;
+    }
+
+    .pagination-container li a,
+    .pagination-container li span {
+      display: block;
+      padding: 8px 14px;
+      border: 1px solid #bbdefb;
+      border-radius: 6px;
+      background: #f0f7ff;
+      color: #1565c0;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .pagination-container li a:hover {
+      background: #90caf9;
+      color: #0d47a1;
+    }
+
+    .pagination-container li.active span {
+      background: #1e88e5;
+      color: #fff;
+      border-color: #1565c0;
+      font-weight: bold;
     }
 
     .pagination a,
@@ -290,6 +315,76 @@
   </style>
 </head>
 <body>
-  <!-- (Body content unchanged) -->
+  <section>
+    <div class="glass-container">
+      <h2>
+        <?= ($logged_in_user['role'] === 'admin') ? 'Admin Dashboard' : 'User Dashboard'; ?>
+      </h2>
+
+      <?php if(!empty($logged_in_user)): ?>
+        <div class="user-status">
+          <strong>Welcome:</strong> 
+          <span class="username"><?= html_escape($logged_in_user['username']); ?></span>
+        </div>
+      <?php else: ?>
+        <div class="user-status error">
+          Logged in user not found
+        </div>
+      <?php endif; ?>
+
+      <div class="top-bar">
+        <a href="<?=site_url('auth/logout'); ?>"><button class="logout-btn">Logout</button></a>
+        <form action="<?=site_url('users');?>" method="get" class="search-form">
+          <?php $q = isset($_GET['q']) ? $_GET['q'] : ''; ?>
+          <input name="q" type="text" placeholder="Search" value="<?=html_escape($q);?>">
+          <button type="submit">Search</button>  
+        </form>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <?php if ($logged_in_user['role'] === 'admin'): ?>
+              <th>Password</th>
+              <th>Role</th>
+            <?php endif; ?>
+            <th>Action</th>
+          </tr>
+          <?php foreach ($users as $user): ?>
+          <tr>
+            <td><?=html_escape($user['id']); ?></td>
+            <td><?=html_escape($user['username']); ?></td>
+            <td><?=html_escape($user['email']); ?></td>
+              <?php if ($logged_in_user['role'] === 'admin'): ?>
+                <td>*******</td>
+                <td><?= html_escape($user['role']); ?></td>
+              <?php endif; ?>
+            <td>
+              <?php if ($logged_in_user['role'] === 'admin'): ?>
+                <a href="<?=site_url('/users/update/'.$user['id']);?>">Update</a>
+                <a href="<?=site_url('/users/delete/'.$user['id']);?>" onclick="return confirm('Are you sure?')">Delete</a>
+              <?php else: ?>
+                <span class="text-muted">View Only</span>
+              <?php endif; ?>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </table>
+      </div>
+
+      <div class="pagination-container">
+        <?php echo $page; ?>
+      </div>
+
+      <?php if ($logged_in_user['role'] === 'admin'): ?>
+        <div class="button-container">
+          <a href="<?=site_url('users/create'); ?>" class="btn-create">+ Create New User</a>
+        </div>
+      <?php endif; ?>
+    </div>
+  </section>
 </body>
 </html>
